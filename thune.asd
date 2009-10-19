@@ -27,4 +27,6 @@
              (:file "seen")
              (:file "log-search")
              (:file "google")
+	     (:file "coyo")
+	     (:file "quote")
              (:file "weather")))))
