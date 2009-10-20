@@ -31,34 +31,7 @@
                                 "No results found.")))))
 
 (defcommand "trope" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
-  (multiple-value-bind (url title)
-      (scroogle-search (format nil " site:tvtropes.org ~a" (command-args message)))
-    (send channel (reply-to message
-                            (if url (format nil "~a - ~a"
-                                            url title)
-                                "No results found.")))))
-
-(defcommand "wp" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
-  (multiple-value-bind (url title)
-      (scroogle-search (format nil " site:en.wikipedia.org ~a" (command-args message)))
-    (send channel (reply-to message
-                            (if url (format nil "~a - ~a"
-                                            url title)
-                                "No results found.")))))
-
-(defcommand "df" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
-  (multiple-value-bind (url title)
-      (scroogle-search (format nil " site:dwarf.lendemaindeveille.com ~a" (command-args message)))
-    (send channel (reply-to message
-                            (if url (format nil "~a - ~a"
-                                            url title)
-                                "No results found.")))))
-
-(defcommand "trope" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
+  "Replies with the first google result for a given search query, searching only TVTropes wiki."
   (multiple-value-bind (url title)
       (scroogle-search (format nil "site:tvtropes.org ~a" (command-args message)))
     (send channel (reply-to message
@@ -67,7 +40,7 @@
                                 "No results found.")))))
 
 (defcommand "wp" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
+  "Replies with the first google result for a given search query, searching only enlish wikipedia."
   (multiple-value-bind (url title)
       (scroogle-search (format nil "site:en.wikipedia.org ~a" (command-args message)))
     (send channel (reply-to message
@@ -76,7 +49,7 @@
                                 "No results found.")))))
 
 (defcommand "df" (channel message)
-  "Replies with the first google result for a given search query, but includes 'site:tvtropes.org' in the search string."
+  "Replies with the first google result for a given search query, but includes 'site:dwarf.lendemaindeveille.com' in the search string.searching only the dwarf fortress wiki."
   (multiple-value-bind (url title)
       (scroogle-search (format nil "site:dwarf.lendemaindeveille.com ~a" (command-args message)))
     (send channel (reply-to message
