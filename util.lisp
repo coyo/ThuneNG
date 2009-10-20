@@ -77,7 +77,7 @@
       (when (> length 2)
        (values (subseq string 1 split-point)
                (when split-point
-                 (subseq string split-point (1- length))))))))
+                 (subseq string (1+ split-point) (1- length))))))))
 
 ;;; TODO: Take a list of var-factor pairs
 (defmacro %format-interval-distribute (vars factors)
@@ -154,3 +154,33 @@
                 return element)
              (rest tags))
       document))
+
+(defvar *input-cache* ()
+  "Stores cached input for some commands.")
+
+(defun input-cache (command nick)
+  "Retrieve cached input from NICK for COMMAND."
+  (cdr (assoc nick (cdr (assoc command *input-cache*
+                               :test #'string-equal))
+              :test #'string-equal)))
+
+(defun (setf input-cache) (value command nick)
+  "Set input cache associated with NICK and COMMAND to VALUE."
+  (let* ((command-alist (assoc command *input-cache*
+                               :test #'string-equal))
+         (nick-alist (assoc nick (cdr command-alist)
+                            :test #'string-equal)))
+    (if command-alist
+        (if nick-alist
+            (setf (cdr nick-alist) value)
+            (push (cons nick value) (cdr command-alist)))
+        (push (cons command (list (cons nick value))) *input-cache*))
+    value))
+
+(defun maybe-cache (command nick input)
+  (if (or (null input)
+          (string= "" input))
+      (input-cache command nick)
+      (progn
+        (setf (input-cache command nick) input)
+        input)))
